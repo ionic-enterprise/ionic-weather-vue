@@ -5,13 +5,7 @@
         <ion-title>UV Index</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">UV Index</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
+    <ion-content class="main-content" :fullscreen="true">
       <ExploreContainer name="UV Index page" />
     </ion-content>
   </ion-page>

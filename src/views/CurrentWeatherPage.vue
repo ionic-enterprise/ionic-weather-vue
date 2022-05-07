@@ -5,13 +5,7 @@
         <ion-title>Current Weather</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Current Weather</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
+    <ion-content class="main-content" :fullscreen="true">
       <ExploreContainer name="Current Weather page" />
     </ion-content>
   </ion-page>

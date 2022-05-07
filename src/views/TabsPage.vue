@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
+      <ion-tab-bar slot="bottom" color="primary">
         <ion-tab-button tab="current-weather" href="/tabs/current-weather">
           <ion-icon :icon="cloud" />
           <ion-label>Current Weather</ion-label>
