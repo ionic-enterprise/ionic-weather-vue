@@ -1,0 +1,7 @@
+{
+  "name": "ionic-weather-vue",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
