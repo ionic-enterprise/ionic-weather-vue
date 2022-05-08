@@ -5,19 +5,66 @@
         <ion-title>Current Weather</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="main-content" :fullscreen="true">
-      <ExploreContainer name="Current Weather page" />
+    <ion-content class="ion-text-center ion-padding main-content" :fullscreen="true">
+      <csdemo-temperature
+        class="primary-value"
+        :scale="scale"
+        :temperature="currentWeather?.temperature"
+        @onClick="toggleScale"
+        style="display: 'block'"
+      ></csdemo-temperature>
+      <csdemo-condition :condition="currentWeather?.condition" :icon-paths="icons"></csdemo-condition>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import { CsdemoCondition, CsdemoTemperature } from '@ionic-enterprise/cs-demo-weather-widgets-vue';
+import useWeather from '@/use/weather';
+
+// <CsdemoCondition condition={weatherData?.condition} iconPaths={icons} />
 
 export default defineComponent({
   name: 'CurrentWeatherPage',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+  components: {
+    CsdemoCondition,
+    CsdemoTemperature,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+  },
+  setup() {
+    const scale = ref('F');
+    const { currentWeather, icons } = useWeather();
+
+    const toggleScale = () => {
+      scale.value = scale.value === 'F' ? 'C' : 'F';
+    };
+
+    return { currentWeather, icons, scale, toggleScale };
+  },
 });
 </script>
+
+<style scoped>
+.primary-value {
+  margin-top: 1em;
+}
+
+.main-content {
+  --padding-top: 3em;
+}
+
+csdemo-condition {
+  --csdemo-condition-image-height: 212px;
+  --csdemo-condition-label-font-size: 24px;
+}
+
+csdemo-temperature {
+  cursor: pointer;
+}
+</style>
