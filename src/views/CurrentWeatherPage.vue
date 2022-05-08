@@ -6,12 +6,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-text-center ion-padding main-content" :fullscreen="true">
+      <div class="primary-value">Madison, WI</div>
       <csdemo-temperature
         class="primary-value"
         :scale="scale"
         :temperature="currentWeather?.temperature"
-        @onClick="toggleScale"
-        style="display: 'block'"
+        @click="toggleScale"
       ></csdemo-temperature>
       <csdemo-condition :condition="currentWeather?.condition" :icon-paths="icons"></csdemo-condition>
     </ion-content>
@@ -58,11 +58,13 @@ export default defineComponent({
 }
 
 csdemo-condition {
+  display: block;
   --csdemo-condition-image-height: 212px;
   --csdemo-condition-label-font-size: 24px;
 }
 
 csdemo-temperature {
+  display: block;
   cursor: pointer;
 }
 </style>
