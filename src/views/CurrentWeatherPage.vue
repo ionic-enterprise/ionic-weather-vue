@@ -13,7 +13,7 @@
         :temperature="currentWeather?.temperature"
         @click="toggleScale"
       ></csdemo-temperature>
-      <csdemo-condition :condition="currentWeather?.condition" :icon-paths="icons"></csdemo-condition>
+      <csdemo-condition :condition="currentWeather?.condition"></csdemo-condition>
     </ion-content>
   </ion-page>
 </template>
@@ -37,13 +37,13 @@ export default defineComponent({
   },
   setup() {
     const scale = ref('F');
-    const { currentWeather, icons } = useWeather();
+    const { currentWeather } = useWeather();
 
     const toggleScale = () => {
       scale.value = scale.value === 'F' ? 'C' : 'F';
     };
 
-    return { currentWeather, icons, scale, toggleScale };
+    return { currentWeather, scale, toggleScale };
   },
 });
 </script>

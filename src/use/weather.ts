@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ref } from 'vue';
-import { CurrentWeather, Forecast, IconMap } from '../models';
+import { CurrentWeather, Forecast } from '../models';
 import keys from './keys.json';
 
 const client = axios.create({
@@ -51,18 +51,6 @@ const riskLevel = (value: number): number => {
   return 4;
 };
 
-const icons: IconMap = {
-  sunny: 'assets/images/sunny.png',
-  cloudy: 'assets/images/cloudy.png',
-  lightRain: 'assets/images/light-rain.png',
-  shower: 'assets/images/shower.png',
-  sunnyThunderStorm: 'assets/images/partial-tstorm.png',
-  thunderStorm: 'assets/images/tstorm.png',
-  fog: 'assets/images/fog.png',
-  snow: 'assets/images/snow.png',
-  unknown: 'assets/images/dunno.png',
-};
-
 const getData = async (): Promise<any> => {
   const res = await client.get(
     `/onecall?lat=43.074085&lon=-89.381027&exclude=minutely,hourly&appid=${keys.openWeatherMap}`
@@ -110,5 +98,4 @@ setInterval(refresh, 1000 * 60 * 5);
 export default () => ({
   currentWeather,
   getUVAdvice,
-  icons,
 });

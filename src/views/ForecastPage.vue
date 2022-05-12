@@ -9,7 +9,7 @@
       <ion-list>
         <ion-item v-for="(f, index) in currentWeather?.forecasts" :key="index" @click="toggleScale">
           <ion-label>
-            <csdemo-daily-forecast :scale="scale" :forecasts="f" :iconPaths="icons"></csdemo-daily-forecast>
+            <csdemo-daily-forecast :scale="scale" :forecasts="f"></csdemo-daily-forecast>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -28,13 +28,13 @@ export default defineComponent({
   components: { CsdemoDailyForecast, IonHeader, IonItem, IonLabel, IonList, IonToolbar, IonTitle, IonContent, IonPage },
   setup() {
     const scale = ref('F');
-    const { currentWeather, icons } = useWeather();
+    const { currentWeather } = useWeather();
 
     const toggleScale = () => {
       scale.value = scale.value === 'F' ? 'C' : 'F';
     };
 
-    return { currentWeather, icons, toggleScale, scale };
+    return { currentWeather, toggleScale, scale };
   },
 });
 </script>
