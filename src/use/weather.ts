@@ -3,6 +3,30 @@ import { ref } from 'vue';
 import { CurrentWeather, Forecast } from '../models';
 import keys from './keys.json';
 
+interface WeatherCondition {
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
+}
+interface RawForecast {
+  dt: number;
+  weather: [WeatherCondition];
+  temp: {
+    min: number;
+    max: number;
+  };
+}
+interface OneCallResponse {
+  current: {
+    dt: number;
+    temp: number;
+    uvi: number;
+    weather: [WeatherCondition];
+  };
+  daily: [RawForecast];
+}
+
 const client = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5',
   headers: {
@@ -51,16 +75,16 @@ const riskLevel = (value: number): number => {
   return 4;
 };
 
-const getData = async (): Promise<any> => {
+const getData = async (): Promise<OneCallResponse> => {
   const res = await client.get(
     `/onecall?lat=43.074085&lon=-89.381027&exclude=minutely,hourly&appid=${keys.openWeatherMap}`
   );
   return res.data;
 };
 
-const convertForecast = (daily: Array<any>): Array<Array<Forecast>> => {
+const convertForecast = (daily: Array<RawForecast>): Array<Array<Forecast>> => {
   const result: Array<Array<Forecast>> = [];
-  daily.forEach((day: any) => {
+  daily.forEach((day: RawForecast) => {
     result.push([
       {
         date: new Date(day.dt * 1000),
@@ -77,7 +101,7 @@ const convertForecast = (daily: Array<any>): Array<Array<Forecast>> => {
   return result;
 };
 
-const convert = (data: any): CurrentWeather => {
+const convert = (data: OneCallResponse): CurrentWeather => {
   return {
     condition: data.current.weather[0].id,
     temperature: data.current.temp,
