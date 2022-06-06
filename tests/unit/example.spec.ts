@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
 import CurrentWeather from '@/views/CurrentWeatherPage.vue';
 
-describe('Tab1Page.vue', () => {
-  it('renders tab 1 Tab1Page', () => {
+describe('CurrentWeatherPage.vue', () => {
+  it('renders tab 1 CurrentWeatherPage', () => {
     const wrapper = mount(CurrentWeather);
-    expect(wrapper.text()).toMatch('Tab 1 page');
+    expect(wrapper.text()).toContain('Current Weather');
   });
 });
