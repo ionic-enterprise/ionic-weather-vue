@@ -9,7 +9,7 @@
       <ion-list>
         <ion-item v-for="(f, index) in currentWeather?.forecasts" :key="index" @click="toggleScale">
           <ion-label>
-            <csdemo-daily-forecast :scale="scale" :forecasts="f"></csdemo-daily-forecast>
+            <csdemo-daily-forecast :scale="scale" :forecast="f"></csdemo-daily-forecast>
           </ion-label>
         </ion-item>
       </ion-list>
