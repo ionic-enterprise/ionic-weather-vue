@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-text-center ion-padding main-content" :fullscreen="true">
-      <div class="primary-value">Madison, WI</div>
+      <div class="primary-value">{{ currentWeather?.location }}</div>
       <csdemo-temperature
         class="primary-value"
         :scale="scale"

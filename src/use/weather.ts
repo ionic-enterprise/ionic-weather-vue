@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { ref } from 'vue';
 import { CurrentWeather, Forecast } from '../models';
 import keys from './keys.json';
+import useHttpClient from './http-client';
+import useLocation from './location';
 
 interface WeatherCondition {
   id: number;
@@ -27,13 +28,8 @@ interface OneCallResponse {
   daily: [RawForecast];
 }
 
-const client = axios.create({
-  baseURL: 'https://api.openweathermap.org/data/2.5',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
+const { client } = useHttpClient();
+const { getCurrentLocation, getLocationName } = useLocation();
 
 const getUVAdvice = (uvIndex: number): string => {
   const risk = riskLevel(uvIndex);
@@ -75,11 +71,13 @@ const riskLevel = (value: number): number => {
   return 4;
 };
 
-const getData = async (): Promise<OneCallResponse> => {
+const fetchData = async (): Promise<void> => {
+  const location = await getCurrentLocation();
+  const locationName = await getLocationName(location);
   const res = await client.get(
-    `/onecall?lat=43.074085&lon=-89.381027&exclude=minutely,hourly&appid=${keys.openWeatherMap}`
+    `/data/2.5/onecall?lat=${location.latitude}&lon=${location.longitude}&exclude=minutely,hourly&appid=${keys.openWeatherMap}`
   );
-  return res.data;
+  currentWeather.value = convert(res.data, locationName);
 };
 
 const convertForecast = (daily: Array<RawForecast>): Array<Forecast> => {
@@ -95,8 +93,9 @@ const convertForecast = (daily: Array<RawForecast>): Array<Forecast> => {
   return result;
 };
 
-const convert = (data: OneCallResponse): CurrentWeather => {
+const convert = (data: OneCallResponse, location: string): CurrentWeather => {
   return {
+    location,
     condition: data.current.weather[0].id,
     temperature: data.current.temp,
     uvIndex: data.current.uvi,
@@ -105,13 +104,8 @@ const convert = (data: OneCallResponse): CurrentWeather => {
 };
 const currentWeather = ref<CurrentWeather | undefined>();
 
-const refresh = async () => {
-  const response = await getData();
-  currentWeather.value = convert(response);
-};
-
-refresh();
-setInterval(refresh, 1000 * 60 * 5);
+fetchData();
+setInterval(fetchData, 1000 * 60 * 5);
 
 export default () => ({
   currentWeather,
