@@ -1,13 +1,13 @@
 import keys from '@/use/keys.json';
-import useHttpClient from '@/use/http-client';
-import useLocation from '@/use/location';
+import { useHttp } from '@/use/http-client';
+import { useLocation } from '@/use/location';
 import { Geolocation } from '@capacitor/geolocation';
 
 jest.mock('@capacitor/geolocation');
 jest.mock('@/use/http-client');
 
 describe('useLocation', () => {
-  const { client } = useHttpClient();
+  const { client } = useHttp();
   beforeEach(() => {
     jest.clearAllMocks();
   });

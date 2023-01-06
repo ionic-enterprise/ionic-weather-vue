@@ -10,6 +10,6 @@ const client = axios.create({
   },
 });
 
-export default (): any => ({
+export const useHttp = () => ({
   client,
 });

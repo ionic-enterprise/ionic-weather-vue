@@ -22,7 +22,7 @@
 import { defineComponent, ref } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import { CsdemoCondition, CsdemoTemperature } from '@ionic-enterprise/cs-demo-weather-widgets-vue';
-import useWeather from '@/use/weather';
+import { useWeather } from '@/use/weather';
 
 export default defineComponent({
   name: 'CurrentWeatherPage',

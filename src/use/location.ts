@@ -1,9 +1,9 @@
 import { Location } from '@/models';
 import keys from './keys.json';
-import useHttpClient from './http-client';
+import { useHttp } from './http-client';
 import { Geolocation } from '@capacitor/geolocation';
 
-const { client } = useHttpClient();
+const { client } = useHttp();
 
 const postalAbbreviations = (state: string): string => {
   switch (state) {
@@ -140,7 +140,7 @@ const getCurrentLocation = async (): Promise<Location> => {
   };
 };
 
-export default () => ({
+export const useLocation = () => ({
   getCurrentLocation,
   getLocationName,
 });

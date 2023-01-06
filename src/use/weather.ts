@@ -1,8 +1,8 @@
 import { ref } from 'vue';
 import { CurrentWeather, Forecast } from '../models';
 import keys from './keys.json';
-import useHttpClient from './http-client';
-import useLocation from './location';
+import { useHttp } from './http-client';
+import { useLocation } from './location';
 
 interface WeatherCondition {
   id: number;
@@ -28,7 +28,7 @@ interface OneCallResponse {
   daily: [RawForecast];
 }
 
-const { client } = useHttpClient();
+const { client } = useHttp();
 const { getCurrentLocation, getLocationName } = useLocation();
 
 const getUVAdvice = (uvIndex: number): string => {
@@ -107,7 +107,7 @@ const currentWeather = ref<CurrentWeather | undefined>();
 fetchData();
 setInterval(fetchData, 1000 * 60 * 5);
 
-export default () => ({
+export const useWeather = () => ({
   currentWeather,
   getUVAdvice,
 });

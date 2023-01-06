@@ -21,7 +21,7 @@
 import { defineComponent, ref } from 'vue';
 import { IonPage, IonHeader, IonItem, IonLabel, IonList, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import { CsdemoDailyForecast } from '@ionic-enterprise/cs-demo-weather-widgets-vue';
-import useWeather from '@/use/weather';
+import { useWeather } from '@/use/weather';
 
 export default defineComponent({
   name: 'ForecastPage',
