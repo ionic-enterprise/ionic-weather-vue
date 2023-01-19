@@ -12,27 +12,19 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import { CsdemoUvIndex } from '@ionic-enterprise/cs-demo-weather-widgets-vue';
 import { useWeather } from '@/use/weather';
 
-export default defineComponent({
-  name: 'UVIndexPage',
-  components: { CsdemoUvIndex, IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
-  setup() {
-    const { currentWeather, getUVAdvice } = useWeather();
-    const advice = computed(() => {
-      if (currentWeather.value) {
-        return getUVAdvice(currentWeather.value.uvIndex);
-      } else {
-        return '';
-      }
-    });
-
-    return { currentWeather, advice };
-  },
+const { currentWeather, getUVAdvice } = useWeather();
+const advice = computed(() => {
+  if (currentWeather.value) {
+    return getUVAdvice(currentWeather.value.uvIndex);
+  } else {
+    return '';
+  }
 });
 </script>
 

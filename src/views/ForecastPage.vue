@@ -17,26 +17,18 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import { IonPage, IonHeader, IonItem, IonLabel, IonList, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
 import { CsdemoDailyForecast } from '@ionic-enterprise/cs-demo-weather-widgets-vue';
 import { useWeather } from '@/use/weather';
 
-export default defineComponent({
-  name: 'ForecastPage',
-  components: { CsdemoDailyForecast, IonHeader, IonItem, IonLabel, IonList, IonToolbar, IonTitle, IonContent, IonPage },
-  setup() {
-    const scale = ref('F');
-    const { currentWeather } = useWeather();
+const scale = ref('F');
+const { currentWeather } = useWeather();
 
-    const toggleScale = () => {
-      scale.value = scale.value === 'F' ? 'C' : 'F';
-    };
-
-    return { currentWeather, toggleScale, scale };
-  },
-});
+const toggleScale = () => {
+  scale.value = scale.value === 'F' ? 'C' : 'F';
+};
 </script>
 
 <style scoped>

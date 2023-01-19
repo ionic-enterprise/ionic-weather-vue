@@ -22,20 +22,7 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { calendar, cloud, sunny } from 'ionicons/icons';
-
-export default defineComponent({
-  name: 'TabsPage',
-  components: { IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet },
-  setup() {
-    return {
-      calendar,
-      cloud,
-      sunny,
-    };
-  },
-});
 </script>
