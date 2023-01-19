@@ -13,7 +13,8 @@
     "prepare": "husky install",
     "serve": "vue-cli-service serve",
     "start": "npm run serve",
-    "test": "vue-cli-service test:unit --watch",
+    "test": "vue-cli-service test:unit",
+    "test:dev": "vue-cli-service test:unit --watch",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
   },
@@ -53,7 +54,7 @@
     "babel-jest": "^27.3.1",
     "cypress": "^8.7.0",
     "eslint": "^8.4.1",
-    "eslint-plugin-vue": "~9.8.0",
+    "eslint-plugin-vue": "~9.9.0",
     "husky": "~8.0.1",
     "jest": "^27.3.1",
     "prettier": "~2.8.1",
