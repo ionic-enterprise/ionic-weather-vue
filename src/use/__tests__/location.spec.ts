@@ -1,15 +1,16 @@
-import keys from '@/use/keys.json';
 import { useHttp } from '@/use/http-client';
+import keys from '@/use/keys.json';
 import { useLocation } from '@/use/location';
 import { Geolocation } from '@capacitor/geolocation';
+import { Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 
-jest.mock('@capacitor/geolocation');
-jest.mock('@/use/http-client');
+vi.mock('@capacitor/geolocation');
+vi.mock('@/use/http-client');
 
 describe('useLocation', () => {
   const { client } = useHttp();
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('get location name', () => {
@@ -24,7 +25,7 @@ describe('useLocation', () => {
     });
 
     it('returns the city with the postal abbreviation', async () => {
-      (client.get as jest.Mock).mockResolvedValue({
+      (client.get as Mock).mockResolvedValue({
         data: [{ name: 'Bismark', state: 'South Dakota', country: 'United States' }],
       });
       const res = await getLocationName({ latitude: 43.45993, longitude: -76.2435 });
@@ -32,13 +33,13 @@ describe('useLocation', () => {
     });
 
     it('return the city and the country if there is no state', async () => {
-      (client.get as jest.Mock).mockResolvedValue({ data: [{ name: 'London', country: 'England' }] });
+      (client.get as Mock).mockResolvedValue({ data: [{ name: 'London', country: 'England' }] });
       const res = await getLocationName({ latitude: 43.45993, longitude: -76.2435 });
       expect(res).toEqual('London, England');
     });
 
     it('returns unknown if there is no useful information', async () => {
-      (client.get as jest.Mock).mockResolvedValue({ data: [] });
+      (client.get as Mock).mockResolvedValue({ data: [] });
       const res = await getLocationName({ latitude: 43.45993, longitude: -76.2435 });
       expect(res).toEqual('Unknown');
     });
@@ -53,7 +54,7 @@ describe('useLocation', () => {
     });
 
     it('resolves the coordinates of the position', async () => {
-      (Geolocation.getCurrentPosition as jest.Mock).mockResolvedValue({
+      (Geolocation.getCurrentPosition as Mock).mockResolvedValue({
         timestamp: 1657819201229,
         coords: {
           accuracy: 328,
@@ -72,7 +73,7 @@ describe('useLocation', () => {
     });
 
     it('returns the default position if the plugin rejects', async () => {
-      (Geolocation.getCurrentPosition as jest.Mock).mockRejectedValue(null);
+      (Geolocation.getCurrentPosition as Mock).mockRejectedValue(null);
       const loc = await getCurrentLocation();
       expect(loc).toEqual({
         latitude: 43.074085,
