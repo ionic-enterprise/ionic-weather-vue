@@ -10,22 +10,24 @@ interface WeatherCondition {
   description: string;
   icon: string;
 }
-interface RawForecast {
-  dt: number;
-  weather: [WeatherCondition];
-  temp: {
-    min: number;
-    max: number;
-  };
+interface ForecastResponse {
+  list: [
+    {
+      dt: number;
+      weather: [WeatherCondition];
+      main: {
+        temp_min: number;
+        temp_max: number;
+      };
+    },
+  ];
 }
-interface OneCallResponse {
-  current: {
-    dt: number;
+interface WeatherResponse {
+  dt: number;
+  main: {
     temp: number;
-    uvi: number;
-    weather: [WeatherCondition];
   };
-  daily: [RawForecast];
+  weather: [WeatherCondition];
 }
 
 const { client } = useHttp();
@@ -74,32 +76,35 @@ const riskLevel = (value: number): number => {
 const fetchData = async (): Promise<void> => {
   const location = await getCurrentLocation();
   const locationName = await getLocationName(location);
-  const res = await client.get(
-    `/data/2.5/onecall?lat=${location.latitude}&lon=${location.longitude}&exclude=minutely,hourly&appid=${keys.openWeatherMap}`
+  const weather = await client.get(
+    `/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${keys.openWeatherMap}`,
   );
-  currentWeather.value = convert(res.data, locationName);
+  const forecast = await client.get(
+    `/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${keys.openWeatherMap}`,
+  );
+  currentWeather.value = convert(weather.data, forecast.data, locationName);
 };
 
-const convertForecast = (daily: Array<RawForecast>): Array<Forecast> => {
+const convertForecast = (forecast: ForecastResponse): Array<Forecast> => {
   const result: Array<Forecast> = [];
-  daily.forEach((day: RawForecast) => {
+  forecast.list.forEach((day) => {
     result.push({
       date: new Date(day.dt * 1000),
       condition: day.weather[0].id,
-      low: day.temp.min,
-      high: day.temp.max,
+      low: day.main.temp_min,
+      high: day.main.temp_max,
     });
   });
   return result;
 };
 
-const convert = (data: OneCallResponse, location: string): CurrentWeather => {
+const convert = (weather: WeatherResponse, forecast: ForecastResponse, location: string): CurrentWeather => {
   return {
     location,
-    condition: data.current.weather[0].id,
-    temperature: data.current.temp,
-    uvIndex: data.current.uvi,
-    forecasts: convertForecast(data.daily),
+    condition: weather.weather[0].id,
+    temperature: weather.main.temp,
+    uvIndex: Math.floor(Math.random() * 14) + 1,
+    forecasts: convertForecast(forecast),
   };
 };
 const currentWeather = ref<CurrentWeather | undefined>();
