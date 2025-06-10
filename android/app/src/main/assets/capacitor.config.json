@@ -1,5 +1,13 @@
 {
   "appId": "io.ionic.ionicweathervue",
   "appName": "ionic-weather-vue",
-  "webDir": "dist"
+  "webDir": "dist",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto"
+  },
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false
+    }
+  }
 }
