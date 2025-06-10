@@ -1,5 +1,6 @@
 {
   "appId": "io.ionic.ionicweathervue",
   "appName": "ionic-weather-vue",
-  "webDir": "dist"
+  "webDir": "dist",
+  "packageClassList": ["AppPlugin", "GeolocationPlugin", "HapticsPlugin", "KeyboardPlugin", "StatusBarPlugin"]
 }
