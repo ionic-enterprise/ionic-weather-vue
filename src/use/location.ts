@@ -114,7 +114,7 @@ const postalAbbreviations = (state: string): string => {
 
 const getLocationName = async (location: Location): Promise<string> => {
   const res = await client.get(
-    `/geo/1.0/reverse?lat=${location.latitude}&lon=${location.longitude}&appid=${keys.openWeatherMap}`
+    `/geo/1.0/reverse?lat=${location.latitude}&lon=${location.longitude}&appid=${keys.openWeatherMap}`,
   );
   if (res && res.data && res.data.length) {
     return `${res.data[0].name}, ${postalAbbreviations(res.data[0].state) || res.data[0].country}`;
@@ -130,9 +130,7 @@ const getCurrentLocation = async (): Promise<Location> => {
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude,
     };
-  } catch (err) {
-    null;
-  }
+  } catch {}
 
   return {
     latitude: 43.074085,
