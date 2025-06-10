@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="main-content" :fullscreen="true">
-      <ion-list>
+      <ion-list class="transparent">
         <ion-item v-for="(f, index) in currentWeather?.forecasts" :key="index" @click="toggleScale">
           <ion-label>
             <csdemo-daily-forecast :scale="scale" :forecast="f"></csdemo-daily-forecast>
